@@ -28,20 +28,19 @@ class ButtonCustom extends StatelessWidget {
           children: [
             icon == null
                 ? const Text('')
-                : Padding(
-                    padding: const EdgeInsets.only(top: 5, bottom: 5),
-                    child: Image.asset(
-                      icon!,
-                    ),
+                : Image.asset(
+                    icon!,
                   ),
-            Text(
-              text,
-              style: TextStyle(
-                color: color,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: color,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
-              textAlign: TextAlign.center,
             ),
           ],
         ),
