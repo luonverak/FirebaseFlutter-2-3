@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase/widget/font_colors.dart';
 
+import '../widget/button_custom.dart';
 import '../widget/input_field.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -46,7 +48,29 @@ class LoginScreen extends StatelessWidget {
             icon: const Icon(Icons.lock),
             sunfix: const Icon(Icons.visibility_off),
             obscureText: true,
-          )
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          ButtonCustom(
+            text: 'Login',
+            color: Colors.white,
+            backgroundButton: buttonColor,
+          ),
+          const Text(
+            'or',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          ButtonCustom(
+            text: 'Connect with facebook',
+            color: Colors.white,
+            backgroundButton: FBbutton,
+            icon: 'asset/icon/facebook.png',
+          ),
         ],
       ),
     );
