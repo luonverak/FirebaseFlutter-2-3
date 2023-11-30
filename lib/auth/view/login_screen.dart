@@ -9,6 +9,7 @@ class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
   var email = TextEditingController();
   var password = TextEditingController();
+  RxBool check = true.obs;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,12 +44,23 @@ class LoginScreen extends StatelessWidget {
             icon: const Icon(Icons.email),
             obscureText: false,
           ),
-          InputField(
-            controller: password,
-            hintText: 'Password',
-            icon: const Icon(Icons.lock),
-            sunfix: const Icon(Icons.visibility_off),
-            obscureText: true,
+          Obx(
+            () {
+              return InputField(
+                controller: password,
+                hintText: 'Password',
+                icon: const Icon(Icons.lock),
+                sunfix: IconButton(
+                  onPressed: () {
+                    check.value = !check.value;
+                  },
+                  icon: (check.value == true)
+                      ? const Icon(Icons.visibility_off)
+                      : const Icon(Icons.remove_red_eye),
+                ),
+                obscureText: check.value,
+              );
+            },
           ),
           const SizedBox(
             height: 40,

@@ -13,8 +13,8 @@ class InputField extends StatelessWidget {
   var controller = TextEditingController();
   final String hintText;
   final Icon icon;
-  late Icon? sunfix;
-  bool obscureText;
+  late IconButton? sunfix;
+  bool obscureText = false;
   @override
   Widget build(BuildContext context) {
     return Padding(
