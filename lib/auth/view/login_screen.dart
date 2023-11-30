@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/widget/font_colors.dart';
+import 'package:get/get.dart';
 
 import '../widget/button_custom.dart';
 import '../widget/input_field.dart';

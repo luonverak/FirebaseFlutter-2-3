@@ -23,28 +23,27 @@ class ButtonCustom extends StatelessWidget {
           color: backgroundButton,
           borderRadius: BorderRadius.circular(20),
         ),
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              icon == null
-                  ? const Text('')
-                  : Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Image.asset(
-                        icon!,
-                      ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            icon == null
+                ? const Text('')
+                : Padding(
+                    padding: const EdgeInsets.only(top: 5, bottom: 5),
+                    child: Image.asset(
+                      icon!,
                     ),
-              Text(
-                text,
-                style: TextStyle(
-                  color: color,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
+                  ),
+            Text(
+              text,
+              style: TextStyle(
+                color: color,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
               ),
-            ],
-          ),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ),
     );
