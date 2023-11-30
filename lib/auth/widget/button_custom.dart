@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase/widget/font_colors.dart';
 
 class ButtonCustom extends StatelessWidget {
   ButtonCustom({
