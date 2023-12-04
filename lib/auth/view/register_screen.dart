@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase/auth/view/register_screen.dart';
 import 'package:flutter_firebase/widget/font_colors.dart';
 import 'package:get/get.dart';
 
@@ -8,11 +6,13 @@ import '../widget/button_custom.dart';
 import '../widget/input_field.dart';
 import '../widget/logo_app.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  RegisterScreen({super.key});
   var email = TextEditingController();
   var password = TextEditingController();
+  var cf_password = TextEditingController();
   RxBool check = true.obs;
+  RxBool cf_check = true.obs;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +22,7 @@ class LoginScreen extends StatelessWidget {
           const SizedBox(
             height: 60,
           ),
-          logoAppCustom('Login Account'),
+          logoAppCustom('Register Account'),
           const SizedBox(
             height: 20,
           ),
@@ -50,56 +50,45 @@ class LoginScreen extends StatelessWidget {
               );
             },
           ),
+          Obx(
+            () {
+              return InputField(
+                controller: cf_password,
+                hintText: 'Confirm Password',
+                icon: const Icon(Icons.lock),
+                sunfix: IconButton(
+                  onPressed: () {
+                    cf_check.value = !cf_check.value;
+                  },
+                  icon: (check.value == true)
+                      ? const Icon(Icons.visibility_off)
+                      : const Icon(Icons.remove_red_eye),
+                ),
+                obscureText: cf_check.value,
+              );
+            },
+          ),
           const SizedBox(
             height: 40,
           ),
           GestureDetector(
             onTap: () {
-              print(email.text);
-              print(password.text.trim());
+              if (password.text == cf_password.text) {
+                print('success');
+              } else {
+                print('error');
+              }
             },
             child: ButtonCustom(
-              text: 'Login',
+              text: 'Create Account',
               color: Colors.white,
-              backgroundButton: buttonColor,
+              backgroundButton: registerButton,
               spacer: const Spacer(
                 flex: 2,
               ),
             ),
           ),
-          const Text(
-            'or',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          ButtonCustom(
-            text: 'Connect with facebook',
-            color: Colors.white,
-            backgroundButton: fbButton,
-            icon: 'asset/icon/facebook.png',
-          ),
-          ButtonCustom(
-            text: 'Connect with Google',
-            color: Colors.black,
-            backgroundButton: googleButton,
-            icon: 'asset/icon/new.png',
-            border: Border.all(
-              width: 1,
-            ),
-          ),
         ],
-      ),
-      bottomNavigationBar: CupertinoButton(
-        child: const Text(
-          'Register Account',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        onPressed: () {
-          Get.to(RegisterScreen());
-        },
       ),
     );
   }
