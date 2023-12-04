@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/widget/font_colors.dart';
 import 'package:get/get.dart';
@@ -14,9 +15,10 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
+        primary: false,
         children: [
           const SizedBox(
-            height: 70,
+            height: 60,
           ),
           SizedBox(
             height: 70,
@@ -25,7 +27,7 @@ class LoginScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 40,
+            height: 20,
           ),
           const Text(
             'Login Account',
@@ -36,7 +38,7 @@ class LoginScreen extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           const SizedBox(
-            height: 40,
+            height: 20,
           ),
           InputField(
             controller: email,
@@ -65,10 +67,19 @@ class LoginScreen extends StatelessWidget {
           const SizedBox(
             height: 40,
           ),
-          ButtonCustom(
-            text: 'Login',
-            color: Colors.white,
-            backgroundButton: buttonColor,
+          GestureDetector(
+            onTap: () {
+              print(email.text);
+              print(password.text.trim());
+            },
+            child: ButtonCustom(
+              text: 'Login',
+              color: Colors.white,
+              backgroundButton: buttonColor,
+              spacer: const Spacer(
+                flex: 2,
+              ),
+            ),
           ),
           const Text(
             'or',
@@ -84,7 +95,23 @@ class LoginScreen extends StatelessWidget {
             backgroundButton: FBbutton,
             icon: 'asset/icon/facebook.png',
           ),
+          ButtonCustom(
+            text: 'Connect with Google',
+            color: Colors.black,
+            backgroundButton: Googlebutton,
+            icon: 'asset/icon/new.png',
+            border: Border.all(
+              width: 1,
+            ),
+          ),
         ],
+      ),
+      bottomNavigationBar: CupertinoButton(
+        child: const Text(
+          'Register Account',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        onPressed: () {},
       ),
     );
   }

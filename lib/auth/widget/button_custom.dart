@@ -7,11 +7,15 @@ class ButtonCustom extends StatelessWidget {
     required this.color,
     required this.backgroundButton,
     this.icon,
+    this.border,
+    this.spacer,
   });
   final String text;
   final Color color;
   final Color backgroundButton;
   String? icon;
+  Border? border;
+  Spacer? spacer;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -22,25 +26,31 @@ class ButtonCustom extends StatelessWidget {
         decoration: BoxDecoration(
           color: backgroundButton,
           borderRadius: BorderRadius.circular(20),
+          border: border,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             icon == null
                 ? const Text('')
-                : Image.asset(
-                    icon!,
+                : Padding(
+                    padding: const EdgeInsets.only(left: 5),
+                    child: Image.asset(
+                      icon!,
+                      width: 45,
+                    ),
                   ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              child: Text(
-                text,
-                style: TextStyle(
-                  color: color,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
+            spacer == null ? const Spacer() : spacer!,
+            Text(
+              text,
+              style: TextStyle(
+                color: color,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
               ),
+            ),
+            const Spacer(
+              flex: 2,
             ),
           ],
         ),
