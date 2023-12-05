@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase/auth/controller/user_controller.dart';
+import 'package:flutter_firebase/auth/model/user_model.dart';
 import 'package:flutter_firebase/widget/font_colors.dart';
 import 'package:get/get.dart';
 
@@ -8,6 +10,7 @@ import '../widget/logo_app.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({super.key});
+  final UserController controller = Get.put(UserController());
   var email = TextEditingController();
   var password = TextEditingController();
   var cf_password = TextEditingController();
@@ -60,7 +63,7 @@ class RegisterScreen extends StatelessWidget {
                   onPressed: () {
                     cf_check.value = !cf_check.value;
                   },
-                  icon: (check.value == true)
+                  icon: (cf_check.value == true)
                       ? const Icon(Icons.visibility_off)
                       : const Icon(Icons.remove_red_eye),
                 ),
@@ -72,9 +75,15 @@ class RegisterScreen extends StatelessWidget {
             height: 40,
           ),
           GestureDetector(
-            onTap: () {
+            onTap: () async {
               if (password.text == cf_password.text) {
-                print('success');
+                controller.createUser(
+                  UserModel(
+                    email: email.text,
+                    password: password.text.trim(),
+                  ),
+                );
+                print('sucess');
               } else {
                 print('error');
               }

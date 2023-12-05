@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase/auth/controller/user_controller.dart';
+import 'package:flutter_firebase/auth/model/user_model.dart';
 import 'package:flutter_firebase/auth/view/register_screen.dart';
 import 'package:flutter_firebase/widget/font_colors.dart';
 import 'package:get/get.dart';
@@ -10,6 +12,7 @@ import '../widget/logo_app.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
+  final UserController controller = Get.put(UserController());
   var email = TextEditingController();
   var password = TextEditingController();
   RxBool check = true.obs;
@@ -54,9 +57,13 @@ class LoginScreen extends StatelessWidget {
             height: 40,
           ),
           GestureDetector(
-            onTap: () {
-              print(email.text);
-              print(password.text.trim());
+            onTap: () async {
+              controller.loginAccount(
+                UserModel(
+                  email: email.text,
+                  password: password.text.trim(),
+                ),
+              );
             },
             child: ButtonCustom(
               text: 'Login',
