@@ -27,13 +27,13 @@ class UserController extends GetxController {
 
   Future<void> loginAccount(UserModel model) async {
     try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-            email: model.email,
-            password: model.password,
-          )
-          .whenComplete(
-              () => Get.snackbar('Success', 'Account has been login'));
+      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: model.email,
+        password: model.password,
+      );
+      if (credential.user != null) {
+        Get.offAll(const HomeScreen());
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         Get.snackbar('Error', 'No user found for that email.');
