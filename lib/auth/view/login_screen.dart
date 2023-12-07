@@ -89,7 +89,9 @@ class LoginScreen extends StatelessWidget {
             icon: 'asset/icon/facebook.png',
           ),
           GestureDetector(
-            onTap: () => controller.signInWithGoogle(),
+            onTap: () async {
+              await controller.signInWithGoogle();
+            },
             child: ButtonCustom(
               text: 'Connect with Google',
               color: Colors.black,
