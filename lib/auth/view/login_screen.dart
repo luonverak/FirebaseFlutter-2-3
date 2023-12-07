@@ -88,13 +88,16 @@ class LoginScreen extends StatelessWidget {
             backgroundButton: fbButton,
             icon: 'asset/icon/facebook.png',
           ),
-          ButtonCustom(
-            text: 'Connect with Google',
-            color: Colors.black,
-            backgroundButton: googleButton,
-            icon: 'asset/icon/new.png',
-            border: Border.all(
-              width: 1,
+          GestureDetector(
+            onTap: () => controller.signInWithGoogle(),
+            child: ButtonCustom(
+              text: 'Connect with Google',
+              color: Colors.black,
+              backgroundButton: googleButton,
+              icon: 'asset/icon/new.png',
+              border: Border.all(
+                width: 1,
+              ),
             ),
           ),
         ],
