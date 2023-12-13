@@ -83,7 +83,7 @@ class LoginScreen extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           GestureDetector(
-            onTap: () async => await controller.signInWithFacebook(),
+            onTap: () async {},
             child: ButtonCustom(
               text: 'Connect with facebook',
               color: Colors.white,
