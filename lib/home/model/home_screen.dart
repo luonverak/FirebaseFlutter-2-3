@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/auth/controller/user_controller.dart';
+import 'package:flutter_firebase/home/widget/colors.dart';
 import 'package:get/get.dart';
+
+import '../widget/user_setting.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -10,15 +13,15 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Usersetting(),
       appBar: AppBar(
-        title: Text(user!.email!),
+        backgroundColor: appBarColor,
+        title: const Text('Dating note'),
         actions: [
           IconButton(
-            onPressed: () async {
-              controller.logOutUser();
-            },
-            icon: const Icon(Icons.logout),
-          )
+            onPressed: () {},
+            icon: const Icon(Icons.add),
+          ),
         ],
       ),
       body: const Center(
