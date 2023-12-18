@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_firebase/auth/model/user_model.dart';
 import 'package:flutter_firebase/auth/view/login_screen.dart';
-import 'package:flutter_firebase/home/model/home_screen.dart';
+import 'package:flutter_firebase/home/view/home_screen.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 

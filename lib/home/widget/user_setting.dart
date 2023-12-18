@@ -41,9 +41,11 @@ class Usersetting extends StatelessWidget {
                 ),
               ),
             ),
-            const Divider(
-              color: Colors.black,
-              thickness: 1,
+            Obx(
+              () => Divider(
+                color: (check.value == true) ? Colors.black : Colors.white,
+                thickness: 1,
+              ),
             ),
             Obx(
               () => ListTile(
