@@ -9,8 +9,8 @@ import '../widget/colors.dart';
 class AddAndEditScreen extends StatelessWidget {
   AddAndEditScreen({super.key, this.productModel});
   ProductModel? productModel;
-  var name = TextEditingController();
-  var price = TextEditingController();
+  var productName = TextEditingController();
+  var productPrice = TextEditingController();
   final controller = Get.put(ProductController());
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,9 @@ class AddAndEditScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () async {
+              await controller.uploadFile(controller.file!);
+            },
             icon: const Icon(Icons.save),
           ),
         ],
@@ -108,15 +110,15 @@ class AddAndEditScreen extends StatelessWidget {
                 height: 10,
               ),
               InputField(
-                controller: name,
+                controller: productName,
                 hintText: 'Enter product name',
               ),
               const SizedBox(
                 height: 10,
               ),
               InputField(
-                controller: price,
-                hintText: 'Enter product name',
+                controller: productPrice,
+                hintText: 'Enter product description',
                 maxLine: 10,
               ),
             ],
