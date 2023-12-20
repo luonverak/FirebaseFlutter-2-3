@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/home/controller/product_controller.dart';
@@ -22,9 +24,7 @@ class AddAndEditScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () async {
-              await controller.uploadFile(controller.file!);
-            },
+            onPressed: () async {},
             icon: const Icon(Icons.save),
           ),
         ],
