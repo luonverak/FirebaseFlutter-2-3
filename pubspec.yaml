@@ -42,6 +42,7 @@ dependencies:
   flutter_slidable: ^3.0.1
   cloud_firestore: ^4.13.6
   image_picker: ^1.0.5
+  adaptive_action_sheet: ^2.0.2
 
 
 dev_dependencies:
