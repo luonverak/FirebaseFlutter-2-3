@@ -1,10 +1,12 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/home/controller/product_controller.dart';
 import 'package:flutter_firebase/home/model/prooduct_model.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import '../widget/input_field.dart';
 import '../widget/colors.dart';
 
@@ -14,6 +16,7 @@ class AddAndEditScreen extends StatelessWidget {
   var productName = TextEditingController();
   var productPrice = TextEditingController();
   final controller = Get.put(ProductController());
+  var time = DateTime.now();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +27,20 @@ class AddAndEditScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () async {},
+            onPressed: () async {
+              await controller.uploadFile(XFile(controller.file.toString()));
+              await controller
+                  .addProduct(
+                    ProductModel(
+                      id: Random().nextInt(100000),
+                      name: productName.text,
+                      price: double.parse(productPrice.text),
+                      image: controller.imageURL,
+                      time: '${time.year}-${time.month}-${time.day}',
+                    ),
+                  )
+                  .whenComplete(() => Get.back());
+            },
             icon: const Icon(Icons.save),
           ),
         ],
@@ -118,8 +134,7 @@ class AddAndEditScreen extends StatelessWidget {
               ),
               InputField(
                 controller: productPrice,
-                hintText: 'Enter product description',
-                maxLine: 10,
+                hintText: 'Enter product price',
               ),
             ],
           ),
