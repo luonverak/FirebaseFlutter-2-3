@@ -88,7 +88,7 @@ class AddAndEditScreen extends StatelessWidget {
                               onPressed: (context) async {
                                 await controller
                                     .openGallery()
-                                    .whenComplete(() => Navigator.pop(context));
+                                    .whenComplete(() => Get.back());
                               },
                             ),
                             BottomSheetAction(
@@ -96,7 +96,7 @@ class AddAndEditScreen extends StatelessWidget {
                               onPressed: (context) async {
                                 await controller
                                     .openCamerea()
-                                    .whenComplete(() => Navigator.pop(context));
+                                    .whenComplete(() => Get.back());
                               },
                             ),
                           ],
