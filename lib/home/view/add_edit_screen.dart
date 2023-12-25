@@ -25,11 +25,9 @@ class _AddAndEditScreenState extends State<AddAndEditScreen> {
   var productPrice = TextEditingController();
   final controller = Get.put(ProductController());
   var time = DateTime.now();
-  var url = "";
   void updateFilter() {
     productName.text = widget.productModel!.name;
     productPrice.text = widget.productModel!.price.toString();
-    url = widget.productModel!.image;
   }
 
   @override
@@ -102,15 +100,10 @@ class _AddAndEditScreenState extends State<AddAndEditScreen> {
                               ? const DecorationImage(
                                   image: AssetImage('asset/image/9212299.jpg'),
                                 )
-                              : (controller.file != null)
-                                  ? DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: FileImage(controller.file!),
-                                    )
-                                  : DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(url),
-                                    ),
+                              : DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: FileImage(controller.file!),
+                                ),
                         ),
                       );
                     },
