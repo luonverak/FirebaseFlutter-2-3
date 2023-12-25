@@ -10,36 +10,71 @@ import 'package:image_picker/image_picker.dart';
 import '../widget/input_field.dart';
 import '../widget/colors.dart';
 
-class AddAndEditScreen extends StatelessWidget {
-  AddAndEditScreen({super.key, this.productModel});
+class AddAndEditScreen extends StatefulWidget {
+  AddAndEditScreen({super.key, this.docId, this.productModel});
+  late String? docId;
   ProductModel? productModel;
+
+  @override
+  State<AddAndEditScreen> createState() => _AddAndEditScreenState();
+}
+
+class _AddAndEditScreenState extends State<AddAndEditScreen> {
   var productName = TextEditingController();
   var productPrice = TextEditingController();
   final controller = Get.put(ProductController());
   var time = DateTime.now();
+
+  void updateFilter() {
+    productName.text = widget.productModel!.name;
+    productPrice.text = widget.productModel!.price.toString();
+    widget.productModel!.image;
+  }
+
+  @override
+  void initState() {
+    widget.productModel != null ? updateFilter() : Text('');
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appBarColor,
         title: Text(
-          (productModel == null) ? 'Add product' : 'Edit product',
+          (widget.docId == null) ? 'Add product' : 'Edit product',
         ),
         actions: [
           IconButton(
             onPressed: () async {
               await controller.uploadFile(XFile(controller.file.toString()));
-              await controller
-                  .addProduct(
-                    ProductModel(
-                      id: Random().nextInt(100000),
-                      name: productName.text,
-                      price: double.parse(productPrice.text),
-                      image: controller.imageURL,
-                      time: '${time.year}-${time.month}-${time.day}',
-                    ),
-                  )
-                  .whenComplete(() => Get.back());
+              (widget.productModel == null)
+                  ? await controller
+                      .addProduct(
+                        ProductModel(
+                          id: Random().nextInt(100000),
+                          name: productName.text,
+                          price: double.parse(productPrice.text),
+                          image: controller.imageURL,
+                          time: '${time.year}-${time.month}-${time.day}',
+                        ),
+                      )
+                      .whenComplete(() => Get.back())
+                  : await controller
+                      .updateProduct(
+                        ProductModel(
+                          id: widget.productModel!.id,
+                          name: productName.text,
+                          price: double.parse(productPrice.text),
+                          image: (controller.imageURL == "")
+                              ? widget.productModel!.image
+                              : controller.imageURL,
+                          time: '${time.year}-${time.month}-${time.day}',
+                        ),
+                        widget.docId.toString(),
+                      )
+                      .whenComplete(() => Get.back());
             },
             icon: const Icon(Icons.save),
           ),

@@ -53,13 +53,27 @@ class ProductController extends GetxController {
     await product
         .add(model.fromJson())
         .then(
-          (value) => print("Product Added"),
+          (value) => Get.snackbar('Success', 'Item add success'),
         )
         .catchError(
           (error) => print("Failed to add products: $error"),
         );
   }
-  // Future<List<ProductModel>> getProduct()async{
 
-  // }
+  Future<void> deleteProduct(String id) async {
+    await product.doc(id).delete();
+    Get.snackbar('Success', 'Item was remove');
+  }
+
+  Future updateProduct(ProductModel model, String id) async {
+    await product
+        .doc(id)
+        .update(model.fromJson())
+        .then(
+          (value) => Get.snackbar('Success', 'Item add success'),
+        )
+        .catchError(
+          (error) => print("Failed to update user: $error"),
+        );
+  }
 }
