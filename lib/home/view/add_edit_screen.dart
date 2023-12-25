@@ -5,6 +5,7 @@ import 'package:adaptive_action_sheet/adaptive_action_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/home/controller/product_controller.dart';
 import 'package:flutter_firebase/home/model/prooduct_model.dart';
+import 'package:flutter_firebase/home/view/home_screen.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import '../widget/input_field.dart';
@@ -24,11 +25,11 @@ class _AddAndEditScreenState extends State<AddAndEditScreen> {
   var productPrice = TextEditingController();
   final controller = Get.put(ProductController());
   var time = DateTime.now();
-
+  var url = "";
   void updateFilter() {
     productName.text = widget.productModel!.name;
     productPrice.text = widget.productModel!.price.toString();
-    widget.productModel!.image;
+    url = widget.productModel!.image;
   }
 
   @override
@@ -60,7 +61,7 @@ class _AddAndEditScreenState extends State<AddAndEditScreen> {
                           time: '${time.year}-${time.month}-${time.day}',
                         ),
                       )
-                      .whenComplete(() => Get.back())
+                      .whenComplete(() => Get.to(HomeScreen()))
                   : await controller
                       .updateProduct(
                         ProductModel(
@@ -74,7 +75,7 @@ class _AddAndEditScreenState extends State<AddAndEditScreen> {
                         ),
                         widget.docId.toString(),
                       )
-                      .whenComplete(() => Get.back());
+                      .whenComplete(() => Get.to(HomeScreen()));
             },
             icon: const Icon(Icons.save),
           ),
@@ -101,10 +102,15 @@ class _AddAndEditScreenState extends State<AddAndEditScreen> {
                               ? const DecorationImage(
                                   image: AssetImage('asset/image/9212299.jpg'),
                                 )
-                              : DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: FileImage(controller.file!),
-                                ),
+                              : (controller.file != null)
+                                  ? DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: FileImage(controller.file!),
+                                    )
+                                  : DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(url),
+                                    ),
                         ),
                       );
                     },
