@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import '../widget/input_field.dart';
 import '../widget/colors.dart';
+import '../widget/loading.dart';
 
 class AddAndEditScreen extends StatefulWidget {
   AddAndEditScreen({super.key, this.docId, this.productModel});
@@ -25,14 +26,21 @@ class _AddAndEditScreenState extends State<AddAndEditScreen> {
   var productPrice = TextEditingController();
   final controller = Get.put(ProductController());
   var time = DateTime.now();
+  RxString image = "".obs;
   void updateFilter() {
     productName.text = widget.productModel!.name;
     productPrice.text = widget.productModel!.price.toString();
+    image.value = widget.productModel!.image;
+  }
+
+  void refresh() {
+    productName.text = "";
+    productPrice.text = "";
   }
 
   @override
   void initState() {
-    widget.productModel != null ? updateFilter() : Text('');
+    widget.productModel != null ? updateFilter() : refresh();
     super.initState();
   }
 
@@ -47,6 +55,7 @@ class _AddAndEditScreenState extends State<AddAndEditScreen> {
         actions: [
           IconButton(
             onPressed: () async {
+              openLoading();
               await controller.uploadFile(XFile(controller.file.toString()));
               (widget.productModel == null)
                   ? await controller
@@ -74,6 +83,7 @@ class _AddAndEditScreenState extends State<AddAndEditScreen> {
                         widget.docId.toString(),
                       )
                       .whenComplete(() => Get.to(HomeScreen()));
+              closeLoading();
             },
             icon: const Icon(Icons.save),
           ),
@@ -86,28 +96,45 @@ class _AddAndEditScreenState extends State<AddAndEditScreen> {
             children: [
               Stack(
                 children: [
-                  GetBuilder<ProductController>(
-                    init: ProductController(),
-                    builder: (controller) {
-                      return Container(
-                        width: 200,
-                        height: 200,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(width: 3, color: Colors.blue),
-                          borderRadius: BorderRadius.circular(100),
-                          image: controller.file == null
-                              ? const DecorationImage(
-                                  image: AssetImage('asset/image/9212299.jpg'),
-                                )
-                              : DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: FileImage(controller.file!),
-                                ),
+                  (widget.productModel == null)
+                      ? GetBuilder<ProductController>(
+                          init: ProductController(),
+                          builder: (controller) {
+                            return Container(
+                              width: 200,
+                              height: 200,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                border:
+                                    Border.all(width: 3, color: Colors.blue),
+                                borderRadius: BorderRadius.circular(100),
+                                image: controller.file == null
+                                    ? const DecorationImage(
+                                        image: AssetImage(
+                                            'asset/image/9212299.jpg'),
+                                      )
+                                    : DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: FileImage(
+                                          File(controller.file!.path),
+                                        ),
+                                      ),
+                              ),
+                            );
+                          },
+                        )
+                      : Container(
+                          width: 200,
+                          height: 200,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(width: 3, color: Colors.blue),
+                            borderRadius: BorderRadius.circular(100),
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(image.value)),
+                          ),
                         ),
-                      );
-                    },
-                  ),
                   Positioned(
                     right: 15,
                     bottom: 18,
