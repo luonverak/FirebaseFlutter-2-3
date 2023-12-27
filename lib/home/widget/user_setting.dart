@@ -1,13 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase/home/view/home_screen.dart';
 import 'package:get/get.dart';
 
 import '../../auth/controller/user_controller.dart';
+import '../../shop/view/home_screen.dart';
 
 class Usersetting extends StatelessWidget {
   Usersetting({super.key});
   final UserController controller = Get.put(UserController());
   final user = FirebaseAuth.instance.currentUser;
+  final userController = Get.put(UserController());
   RxBool check = true.obs;
   @override
   Widget build(BuildContext context) {
@@ -22,19 +25,23 @@ class Usersetting extends StatelessWidget {
                 width: 120,
                 height: 120,
                 decoration: BoxDecoration(
-                  color: Colors.amber,
                   borderRadius: BorderRadius.circular(100),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(user!.photoURL!),
-                  ),
+                  image: (user!.photoURL == null)
+                      ? const DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage('asset/image/user.png'),
+                        )
+                      : DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(user!.photoURL!),
+                        ),
                 ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 15, top: 5),
               child: Text(
-                user!.displayName!,
+                user!.displayName == null ? 'Set name' : user!.displayName!,
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -82,6 +89,36 @@ class Usersetting extends StatelessWidget {
                           'Light Mode',
                           style: TextStyle(fontSize: 18),
                         ),
+                ),
+              ),
+            ),
+            Obx(
+              () => GestureDetector(
+                onTap: () => Get.to(HomeShopScreen()),
+                child: ListTile(
+                  leading: Icon(
+                    Icons.shop,
+                    color: (check.value == true) ? Colors.black : Colors.white,
+                  ),
+                  title: const Text(
+                    'Shop',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
+              ),
+            ),
+            Obx(
+              () => GestureDetector(
+                onTap: () async => await userController.logOutUser(),
+                child: ListTile(
+                  leading: Icon(
+                    Icons.logout,
+                    color: (check.value == true) ? Colors.black : Colors.white,
+                  ),
+                  title: const Text(
+                    'Logout',
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
               ),
             ),
